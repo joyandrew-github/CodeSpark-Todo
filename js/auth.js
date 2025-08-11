@@ -50,7 +50,7 @@ class AuthManager {
 
     initRegister() {
         const form = document.getElementById('registerForm');
-        form.addEventListener('submit', (e) => {
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
 
             const name = document.getElementById('name').value.trim();
@@ -71,17 +71,22 @@ class AuthManager {
                 return;
             }
 
-            let users = JSON.parse(localStorage.getItem("users") || "[]");
-            if (users.find(u => u.email === email)) {
-                this.showMessage("User already exists", "error");
-                return;
+            try {
+                const res = await fetch('http://localhost:5000/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, email, password })
+                });
+                const data = await res.json();
+                if (res.ok) {
+                    this.showMessage("Registration successful! Redirecting to login...", "success");
+                    setTimeout(() => window.location.href = "login.html", 1500);
+                } else {
+                    this.showMessage(data.message || "Registration failed", "error");
+                }
+            } catch (err) {
+                this.showMessage("Network error. Please try again.", "error");
             }
-
-            users.push({ name, email, password });
-            localStorage.setItem("users", JSON.stringify(users));
-
-            this.showMessage("Registration successful! Redirecting to login...", "success");
-            setTimeout(() => window.location.href = "login.html", 1500);
         });
     }
 
