@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskQuest - Gamified To-Do Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Background particles for visual appeal -->
+    <div class="particles"></div>
+    
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <i class="fas fa-dragon"></i>
+                <a href="/"><span>TaskQuest</span><a>
+            </div>
+            <button class="sidebar-toggle" id="sidebarToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <a href="#dashboard" class="nav-item active" data-section="dashboard">
+                <i class="fas fa-home"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="#tasks" class="nav-item" data-section="tasks">
+                <i class="fas fa-tasks"></i>
+                <span>My Quests</span>
+            </a>
+            <a href="#progress" class="nav-item" data-section="progress">
+                <i class="fas fa-chart-line"></i>
+                <span>Progress</span>
+            </a>
+            <a href="#wallet" class="nav-item" data-section="wallet">
+                <i class="fas fa-wallet"></i>
+                <span>Wallet</span>
+            </a>
+            <a href="#leaderboard" class="nav-item" data-section="leaderboard">
+                <i class="fas fa-trophy"></i>
+                <span>Leaderboard</span>
+            </a>
+            <a href="#profile" class="nav-item" data-section="profile">
+                <i class="fas fa-user"></i>
+                <span>Profile</span>
+            </a>
+            <a href="#settings" class="nav-item" data-section="settings">
+                <i class="fas fa-cog"></i>
+                <span>Settings</span>
+            </a>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <div class="user-profile">
+                <div class="user-avatar">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <div class="user-info">
+                    <h4 id="userName">TaskQuest</h4>
+                    <span id="userTitle">Level <span id="sidebarLevel">1</span> Adventurer</span>
+                </div>
+            </div>
+            
+            <div class="user-stats-mini">
+                <div class="stat-mini">
+                    <i class="fas fa-coins"></i>
+                    <span id="sidebarCoins">0</span>
+                </div>
+                <div class="stat-mini">
+                    <i class="fas fa-fire"></i>
+                    <span id="sidebarStreak">0</span>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h1 id="pageTitle">Dashboard</h1>
+            </div>
+            
+            <div class="header-right">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search quests..." id="searchInput">
+                </div>
+                
+                <div class="header-stats">
+                    <div class="stat-badge coins">
+                        <i class="fas fa-coins"></i>
+                        <span id="headerCoins">0</span>
+                    </div>
+                    <div class="stat-badge level">
+                        <i class="fas fa-star"></i>
+                        <span id="headerLevel">1</span>
+                    </div>
+                    <div class="stat-badge streak">
+                        <i class="fas fa-fire"></i>
+                        <span id="headerStreak">0</span>
+                    </div>
+                </div>
+                
+                <div class="notifications">
+                    <button class="notification-btn" id="notificationBtn">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-count" id="notificationCount">0</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dashboard Section -->
+        <section id="dashboard-section" class="content-section active">
+            <!-- Quick Stats Cards -->
+            <div class="stats-grid">
+                <div class="stat-card primary">
+                    <div class="stat-icon">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="totalTasks">0</h3>
+                        <p>Total Quests</p>
+                        <small class="stat-change positive">+3 this week</small>
+                    </div>
+                </div>
+                
+                <div class="stat-card success">
+                    <div class="stat-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="completedTasks">0</h3>
+                        <p>Completed Today</p>
+                        <small class="stat-change positive">+2 from yesterday</small>
+                    </div>
+                </div>
+                
+                <div class="stat-card warning">
+                    <div class="stat-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="urgentTasks">0</h3>
+                        <p>Urgent Quests</p>
+                        <small class="stat-change neutral">Due soon</small>
+                    </div>
+                </div>
+                
+                <div class="stat-card danger">
+                    <div class="stat-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="overdueTasks">0</h3>
+                        <p>Overdue</p>
+                        <small class="stat-change negative">Needs attention</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Progress Overview -->
+            <div class="dashboard-grid">
+                <div class="progress-card">
+                    <h3><i class="fas fa-chart-pie"></i> Today's Progress</h3>
+                    <div class="circular-progress">
+                        <svg class="progress-ring" width="120" height="120">
+                            <circle class="progress-ring-bg" cx="60" cy="60" r="50"></circle>
+                            <circle class="progress-ring-circle" cx="60" cy="60" r="50"></circle>
+                        </svg>
+                        <div class="progress-text">
+                            <span id="progressPercent">0%</span>
+                            <small id="progressStats">0 of 0 completed</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="quick-actions-card">
+                    <h3><i class="fas fa-plus-circle"></i> Quick Actions</h3>
+                    <div class="quick-actions">
+                        <button class="quick-action-btn" id="quickAddTask">
+                            <i class="fas fa-plus"></i>
+                            <span>Add Quest</span>
+                        </button>
+                        <button class="quick-action-btn" id="viewUrgent">
+                            <i class="fas fa-fire"></i>
+                            <span>Urgent Tasks</span>
+                        </button>
+                        <button class="quick-action-btn" id="viewProgress">
+                            <i class="fas fa-chart-bar"></i>
+                            <span>View Progress</span>
+                        </button>
+                        <button class="quick-action-btn" id="takeQuiz">
+                            <i class="fas fa-brain"></i>
+                            <span>Take Quiz</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="recent-activity-card">
+                    <h3><i class="fas fa-history"></i> Recent Activity</h3>
+                    <div class="activity-list" id="recentActivity">
+                        <div class="activity-item">
+                            <i class="fas fa-plus text-success"></i>
+                            <span>Welcome to Task Quest!</span>
+                            <small>Just now</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tasks Section -->
+        <section id="tasks-section" class="content-section">
+            <!-- Add Task Form -->
+            <div class="add-task-card">
+                <h3><i class="fas fa-sword"></i> Create New Quest</h3>
+                <form id="taskForm" class="task-form">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="taskName"><i class="fas fa-edit"></i> Quest Name</label>
+                            <input type="text" id="taskName" placeholder="What's your next challenge?" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="taskCategory"><i class="fas fa-tags"></i> Category</label>
+                            <select id="taskCategory" required>
+                                <option value="">Select Category</option>
+                                <option value="work">💼 Work</option>
+                                <option value="personal">👤 Personal</option>
+                                <option value="health">💪 Health</option>
+                                <option value="learning">📚 Learning</option>
+                                <option value="creative">🎨 Creative</option>
+                                <option value="social">👥 Social</option>
+                                <option value="finance">💰 Finance</option>
+                                <option value="home">🏠 Home</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="taskDeadline"><i class="fas fa-calendar"></i> Deadline</label>
+                            <input type="datetime-local" id="taskDeadline" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="taskPriority"><i class="fas fa-flag"></i> Priority</label>
+                            <select id="taskPriority">
+                                <option value="low">🟢 Low</option>
+                                <option value="medium" selected>🟡 Medium</option>
+                                <option value="high">🔴 High</option>
+                            </select>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="taskDescription"><i class="fas fa-align-left"></i> Description (Optional)</label>
+                            <textarea id="taskDescription" placeholder="Additional details about your quest..."></textarea>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-primary">
+                        <i class="fas fa-rocket"></i> Launch Quest
+                    </button>
+                </form>
+            </div>
+
+            <!-- Task Filters -->
+            <div class="task-filters">
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-filter="all">
+                        <i class="fas fa-list"></i> All Quests
+                    </button>
+                    <button class="filter-btn" data-filter="urgent">
+                        <i class="fas fa-fire"></i> Urgent
+                    </button>
+                    <button class="filter-btn" data-filter="today">
+                        <i class="fas fa-calendar-day"></i> Due Today
+                    </button>
+                    <button class="filter-btn" data-filter="completed">
+                        <i class="fas fa-check"></i> Completed
+                    </button>
+                    <button class="filter-btn" data-filter="overdue">
+                        <i class="fas fa-exclamation"></i> Overdue
+                    </button>
+                </div>
+                
+                <div class="view-options">
+                    <button class="view-btn active" data-view="grid">
+                        <i class="fas fa-th"></i>
+                    </button>
+                    <button class="view-btn" data-view="list">
+                        <i class="fas fa-list"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Tasks Container -->
+            <div id="tasksContainer" class="tasks-container grid-view">
+                <!-- Tasks will be dynamically added here -->
+            </div>
+            
+            <div id="emptyState" class="empty-state">
+                <div class="empty-icon">
+                    <i class="fas fa-dragon"></i>
+                </div>
+                <h3>No Quests Yet!</h3>
+                <p>Create your first quest above and start your adventure!</p>
+                <button class="btn-secondary" onclick="document.getElementById('taskName').focus()">
+                    <i class="fas fa-plus"></i> Create Your First Quest
+                </button>
+            </div>
+        </section>
+
+        <!-- Progress Section -->
+        <section id="progress-section" class="content-section">
+            <div class="progress-grid">
+                <div class="chart-card">
+                    <h3><i class="fas fa-chart-bar"></i> Weekly Progress</h3>
+                    <div class="chart-container">
+                        <canvas id="weeklyChart" width="400" height="200"></canvas>
+                    </div>
+                </div>
+                
+                <div class="achievements-card">
+                    <h3><i class="fas fa-trophy"></i> Achievements</h3>
+                    <div class="achievements-list" id="achievementsList">
+                        <div class="achievement locked">
+                            <i class="fas fa-medal"></i>
+                            <div>
+                                <h4>First Quest</h4>
+                                <p>Complete your first task</p>
+                            </div>
+                        </div>
+                        <div class="achievement locked">
+                            <i class="fas fa-fire"></i>
+                            <div>
+                                <h4>Streak Master</h4>
+                                <p>Maintain a 7-day streak</p>
+                            </div>
+                        </div>
+                        <div class="achievement locked">
+                            <i class="fas fa-brain"></i>
+                            <div>
+                                <h4>Quiz Champion</h4>
+                                <p>Get 10 quiz questions right</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Wallet Section -->
+        <section id="wallet-section" class="content-section">
+            <div class="wallet-header">
+                <div class="wallet-balance">
+                    <h2><i class="fas fa-coins"></i> Your Coin Balance</h2>
+                    <div class="balance-amount">
+                        <span id="walletBalance">0</span>
+                        <small>coins</small>
+                    </div>
+                </div>
+                
+                <div class="wallet-stats">
+                    <div class="wallet-stat">
+                        <h4 id="coinsEarnedToday">0</h4>
+                        <p>Earned Today</p>
+                    </div>
+                    <div class="wallet-stat">
+                        <h4 id="coinsEarnedWeek">0</h4>
+                        <p>Earned This Week</p>
+                    </div>
+                    <div class="wallet-stat">
+                        <h4 id="totalCoinsEarned">0</h4>
+                        <p>Total Earned</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="wallet-transactions">
+                <h3><i class="fas fa-history"></i> Transaction History</h3>
+                <div class="transactions-list" id="transactionsList">
+                    <div class="transaction-item">
+                        <i class="fas fa-gift text-success"></i>
+                        <div class="transaction-details">
+                            <h4>Welcome Bonus</h4>
+                            <small>Welcome to Quest Master!</small>
+                        </div>
+                        <span class="transaction-amount positive">+50</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Leaderboard Section -->
+        <section id="leaderboard-section" class="content-section">
+            <div class="leaderboard-header">
+                <h2><i class="fas fa-trophy"></i> Leaderboard</h2>
+                <p>See how you rank among other quest masters!</p>
+            </div>
+            
+            <div class="leaderboard-tabs">
+                <button class="tab-btn active" data-tab="weekly">Weekly</button>
+                <button class="tab-btn" data-tab="monthly">Monthly</button>
+                <button class="tab-btn" data-tab="alltime">All Time</button>
+            </div>
+            
+            <div class="leaderboard-list">
+                <div class="leaderboard-item current-user">
+                    <div class="rank">1</div>
+                    <div class="user-info">
+                        <div class="avatar"><i class="fas fa-user-circle"></i></div>
+                        <div class="user-details">
+                            <h4>You</h4>
+                            <small>Quest Master</small>
+                        </div>
+                    </div>
+                    <div class="score" id="leaderboardScore">0</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Profile Section -->
+        <section id="profile-section" class="content-section">
+            <div class="profile-header">
+                <div class="profile-avatar-wrapper" style="position: relative; display: inline-block;">
+                    <i class="fas fa-user-circle" style="font-size: 96px;"></i>
+                    <button class="change-avatar-btn" style="position: absolute; bottom: 8px; right: 8px; background: #6366f1; border-radius: 50%; border: none; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-camera" style="color: #fff; font-size: 20px;"></i>
+                    </button>
+                </div>
+                <div class="profile-info">
+                    <h2 id="profileName">Quest Master</h2>
+                    <p id="profileTitle">Level <span id="profileLevel">1</span> Adventurer</p>
+                    <div class="profile-stats">
+                        <div class="profile-stat">
+                            <strong id="profileTotalTasks">0</strong>
+                            <span>Total Quests</span>
+                        </div>
+                        <div class="profile-stat">
+                            <strong id="profileCompletedTasks">0</strong>
+                            <span>Completed</span>
+                        </div>
+                        <div class="profile-stat">
+                            <strong id="profileStreak">0</strong>
+                            <span>Day Streak</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="profile-form">
+                <h3><i class="fas fa-edit"></i> Edit Profile</h3>
+                <form id="profileForm">
+                    <div class="form-group">
+                        <label for="profileNameInput">Display Name</label>
+                        <input type="text" id="profileNameInput" value="Quest Master">
+                    </div>
+                    <div class="form-group">
+                        <label for="profileEmail">Email</label>
+                        <input type="email" id="profileEmail" placeholder="your.email@example.com">
+                    </div>
+                    <button type="submit" class="btn-primary">
+                        <i class="fas fa-save"></i> Save Changes
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Settings Section -->
+        <section id="settings-section" class="content-section">
+            <div class="settings-grid">
+                <div class="settings-card">
+                    <h3><i class="fas fa-bell"></i> Notifications</h3>
+                    <div class="setting-item">
+                        <label class="setting-label">
+                            <input type="checkbox" id="emailNotifications" checked>
+                            <span class="setting-toggle"></span>
+                            Email Notifications
+                        </label>
+                        <small>Receive emails for task completions and deadlines</small>
+                    </div>
+                    
+                    <div class="setting-item">
+                        <label class="setting-label">
+                            <input type="checkbox" id="pushNotifications" checked>
+                            <span class="setting-toggle"></span>
+                            Push Notifications
+                        </label>
+                        <small>Get browser notifications for urgent tasks</small>
+                    </div>
+                    
+                    <div class="setting-item">
+                        <label class="setting-label">
+                            <input type="checkbox" id="soundEffects" checked>
+                            <span class="setting-toggle"></span>
+                            Sound Effects
+                        </label>
+                        <small>Play sounds for achievements and completions</small>
+                    </div>
+                </div>
+                
+                <div class="settings-card">
+                    <h3><i class="fas fa-palette"></i> Appearance</h3>
+                    <div class="setting-item">
+                        <label for="themeSelect">Theme</label>
+                        <select id="themeSelect">
+                            <option value="light">Light Theme</option>
+                            <option value="dark">Dark Theme</option>
+                            <option value="auto">Auto (System)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="setting-item">
+                        <label for="accentColor">Accent Color</label>
+                        <div class="color-picker">
+                            <input type="color" id="accentColor" value="#6366f1">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="settings-card">
+                    <h3><i class="fas fa-download"></i> Data Management</h3>
+                    <div class="data-actions">
+                        <button class="btn-secondary" id="exportData">
+                            <i class="fas fa-download"></i> Export Data
+                        </button>
+                        <button class="btn-secondary" id="importData">
+                            <i class="fas fa-upload"></i> Import Data
+                        </button>
+                        <input type="file" id="importFile" accept=".json" style="display: none;">
+                        <button class="btn-danger" id="clearAllData">
+                            <i class="fas fa-trash"></i> Clear All Data
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modals -->
+    <!-- Quiz Modal -->
+    <div id="quizModal" class="modal">
+        <div class="modal-content quiz-modal">
+            <div class="modal-header">
+                <h3><i class="fas fa-brain"></i> Knowledge Challenge</h3>
+                <button class="close-btn" id="closeQuizModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="quizContent">
+                    <div class="quiz-info">
+                        <p>Test your knowledge and earn bonus coins!</p>
+                        <div class="quiz-stats">
+                            <span>Question <span id="currentQuestion">1</span> of <span id="totalQuestions">10</span></span>
+                            <span class="quiz-timer" id="quizTimer">30s</span>
+                        </div>
+                    </div>
+                    
+                    <div class="quiz-question">
+                        <h4 id="questionText">Loading question...</h4>
+                        <div id="answerOptions" class="answer-options">
+                            <!-- Quiz options will be inserted here -->
+                        </div>
+                    </div>
+                    
+                    <div class="quiz-navigation">
+                        <button id="prevQuestion" class="btn-secondary" disabled>
+                            <i class="fas fa-chevron-left"></i> Previous
+                        </button>
+                        <button id="nextQuestion" class="btn-primary">
+                            Next <i class="fas fa-chevron-right"></i>
+                        </button>
+                        <button id="submitQuiz" class="btn-success" style="display: none;">
+                            <i class="fas fa-check"></i> Submit Quiz
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="quiz-results" id="quizResults" style="display: none;">
+                    <div class="result-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h4 id="resultTitle">Quiz Complete!</h4>
+                    <div class="quiz-score">
+                        <span id="correctAnswers">8</span>/<span id="totalAnswers">10</span> Correct
+                    </div>
+                    <p id="resultMessage">Excellent performance!</p>
+                    <div class="coins-earned">
+                        <i class="fas fa-coins"></i>
+                        <span id="coinsEarned">+80</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="startQuiz" class="btn-primary">
+                    <i class="fas fa-play"></i> Start Quiz (10 Questions)
+                </button>
+                <button id="closeQuiz" class="btn-secondary">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Task Detail Modal -->
+    <div id="taskModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="taskModalTitle">Task Details</h3>
+                <button class="close-btn" id="closeTaskModal">&times;</button>
+            </div>
+            <div class="modal-body" id="taskModalBody">
+                <!-- Task details will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Coin Animation -->
+    <div id="coinAnimation" class="coin-animation">
+        <i class="fas fa-coins"></i>
+        <span>+10</span>
+    </div>
+
+    <!-- Level Up Animation -->
+    <div id="levelUpAnimation" class="level-up-animation">
+        <div class="level-up-content">
+            <i class="fas fa-star"></i>
+            <h3>Level Up!</h3>
+            <p>You've reached Level <span id="newLevel">2</span></p>
+        </div>
+    </div>
+
+    <!-- Achievement Notification -->
+    <div id="achievementNotification" class="achievement-notification">
+        <div class="achievement-content">
+            <i class="fas fa-trophy"></i>
+            <div>
+                <h4 id="achievementTitle">Achievement Unlocked!</h4>
+                <p id="achievementDescription">You completed your first quest!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Container -->
+    <div id="notificationContainer" class="notification-container"></div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="loading-spinner">
+            <i class="fas fa-dragon"></i>
+            <p>Loading your quests...</p>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

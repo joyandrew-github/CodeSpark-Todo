@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskQuest - Gamified Productivity Challenge</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Toastify CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <!-- Toastify JS -->
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-trophy"></i>
+                <span>TaskQuest</span>
+            </div>
+            <div class="nav-links">
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#how-it-works" class="nav-link">How It Works</a>
+                <a href="login.html" class="btn btn-outline">Login</a>
+                <a href="register.html" class="btn btn-primary">Get Started</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <i class="fas fa-coins"></i>
+                    <span>Earn Coins • Beat Deadlines • Level Up</span>
+                </div>
+                <h1 class="hero-title">
+                    Turn Your Tasks Into 
+                    <span class="highlight">Epic Challenges</span>
+                </h1>
+                <p class="hero-description">
+                    Transform boring to-dos into exciting quests! Earn coins, beat countdowns, 
+                    take knowledge tests, and compete with friends in the ultimate productivity game.
+                </p>
+                <div class="hero-buttons">
+                    <button onclick="showWelcomeToast()" class="btn btn-primary btn-large">
+                        <i class="fas fa-rocket"></i>
+                        Start Your Quest
+                    </button>
+                    <button onclick="scrollToDemo()" class="btn btn-secondary btn-large">
+                        <i class="fas fa-play"></i>
+                        Watch Demo
+                    </button>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <div class="stat-number">1,234</div>
+                        <div class="stat-label">Tasks Completed</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">567</div>
+                        <div class="stat-label">Coins Earned</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">89%</div>
+                        <div class="stat-label">Success Rate</div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="floating-elements">
+                    <div class="floating-coin coin-1">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                    <div class="floating-coin coin-2">
+                        <i class="fas fa-medal"></i>
+                    </div>
+                    <div class="floating-coin coin-3">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                </div>
+                <div class="task-demo">
+                    <div class="demo-header">
+                        <i class="fas fa-tasks"></i>
+                        <span>Your Quest Board</span>
+                    </div>
+                    <div class="demo-task">
+                        <div class="task-info">
+                            <span class="task-name">Complete JavaScript Course</span>
+                            <span class="task-category programming">Programming</span>
+                        </div>
+                        <div class="task-timer">
+                            <i class="fas fa-clock"></i>
+                            <span class="countdown">02:15:30</span>
+                        </div>
+                        <div class="task-reward">+50 <i class="fas fa-coins"></i></div>
+                    </div>
+                    <div class="demo-task completed">
+                        <div class="task-info">
+                            <span class="task-name">Read AI Article</span>
+                            <span class="task-category learning">Learning</span>
+                        </div>
+                        <div class="task-status">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Completed!</span>
+                        </div>
+                        <div class="task-reward earned">+25 <i class="fas fa-coins"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Game-Changing Features</h2>
+                <p class="section-subtitle">Everything you need to gamify your productivity</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon timer">
+                        <i class="fas fa-stopwatch"></i>
+                    </div>
+                    <h3 class="feature-title">Real-Time Countdowns</h3>
+                    <p class="feature-description">
+                        Watch the clock tick down! Every task gets a live countdown timer 
+                        to keep you motivated and on track.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon coins">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                    <h3 class="feature-title">Coin Rewards System</h3>
+                    <p class="feature-description">
+                        Earn virtual coins for completing tasks on time. Early completion 
+                        gives bonus rewards, late completion deducts coins!
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon quiz">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3 class="feature-title">AI Knowledge Tests</h3>
+                    <p class="feature-description">
+                        Test your understanding with AI-generated quizzes after task completion. 
+                        More knowledge = more coins!
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon email">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h3 class="feature-title">Smart Notifications</h3>
+                    <p class="feature-description">
+                        Get email notifications for completed tasks and missed deadlines. 
+                        Stay informed without staying glued to your screen.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon leaderboard">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h3 class="feature-title">Leaderboard Competition</h3>
+                    <p class="feature-description">
+                        Compete with friends and climb the leaderboard. See who's the 
+                        ultimate productivity champion!
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon progress">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="feature-title">Animated Progress</h3>
+                    <p class="feature-description">
+                        Beautiful animations celebrate your wins! Progress bars, coin 
+                        effects, and achievement unlocks keep you engaged.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">How Your Quest Works</h2>
+                <p class="section-subtitle">Four simple steps to productivity mastery</p>
+            </div>
+            <div class="steps-container">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Create Your Challenge</h3>
+                        <p class="step-description">
+                            Add tasks with categories and deadlines. Watch the countdown timer start immediately!
+                        </p>
+                    </div>
+                    <div class="step-visual">
+                        <i class="fas fa-plus-circle"></i>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Race Against Time</h3>
+                        <p class="step-description">
+                            Complete tasks before the deadline to earn maximum coins and unlock bonus rewards.
+                        </p>
+                    </div>
+                    <div class="step-visual">
+                        <i class="fas fa-running"></i>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Prove Your Knowledge</h3>
+                        <p class="step-description">
+                            Take AI-generated quizzes about your completed tasks to earn extra coins and badges.
+                        </p>
+                    </div>
+                    <div class="step-visual">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Climb the Leaderboard</h3>
+                        <p class="step-description">
+                            Use your earned coins to unlock achievements and compete for the top spot!
+                        </p>
+                    </div>
+                    <div class="step-visual">
+                        <i class="fas fa-crown"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="cta-container">
+            <div class="cta-content">
+                <h2 class="cta-title">Ready to Transform Your Productivity?</h2>
+                <p class="cta-description">
+                    Join thousands of users who've already turned their boring to-do lists into exciting challenges!
+                </p>
+                <div class="cta-buttons">
+                    <button onclick="startQuest()" class="btn btn-primary btn-large">
+                        <i class="fas fa-rocket"></i>
+                        Start Your First Quest
+                    </button>
+                    <button onclick="learnMore()" class="btn btn-outline btn-large">
+                        <i class="fas fa-info-circle"></i>
+                        Learn More
+                    </button>
+                </div>
+            </div>
+            <div class="cta-stats">
+                <div class="floating-stat">
+                    <i class="fas fa-users"></i>
+                    <span>10,000+ Active Users</span>
+                </div>
+                <div class="floating-stat">
+                    <i class="fas fa-tasks"></i>
+                    <span>1M+ Tasks Completed</span>
+                </div>
+                <div class="floating-stat">
+                    <i class="fas fa-coins"></i>
+                    <span>5M+ Coins Earned</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <i class="fas fa-trophy"></i>
+                    <span>TaskQuest</span>
+                </div>
+                <div class="footer-links">
+                    <a href="#" class="footer-link">Privacy Policy</a>
+                    <a href="#" class="footer-link">Terms of Service</a>
+                    <a href="#" class="footer-link">Support</a>
+                    <a href="#" class="footer-link">About</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 TaskQuest. All rights reserved. Turn your tasks into epic adventures!</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function showWelcomeToast() {
+            Toastify({
+                text: "🚀 Welcome to TaskQuest! Your productivity adventure begins now!",
+                duration: 4000,
+                gravity: "top",
+                position: "right",
+                backgroundColor: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+                close: true,
+                stopOnFocus: true
+            }).showToast();
+        }
+
+        function scrollToDemo() {
+            document.getElementById('features').scrollIntoView({ 
+                behavior: 'smooth' 
+            });
+        }
+
+        function startQuest() {
+            Toastify({
+                text: "🎯 Quest Starting Soon! Get ready to level up your productivity!",
+                duration: 3000,
+                gravity: "top",
+                position: "right",
+                backgroundColor: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
+                close: true
+            }).showToast();
+            
+            setTimeout(() => {
+                window.location.href = 'register.html';
+            }, 2000);
+        }
+
+        function learnMore() {
+            document.getElementById('how-it-works').scrollIntoView({ 
+                behavior: 'smooth' 
+            });
+        }
+
+        // Animate countdown demo
+        function animateCountdown() {
+            const countdownElement = document.querySelector('.countdown');
+            if (!countdownElement) return;
+
+            let hours = 2, minutes = 15, seconds = 30;
+            
+            setInterval(() => {
+                seconds--;
+                if (seconds < 0) {
+                    seconds = 59;
+                    minutes--;
+                    if (minutes < 0) {
+                        minutes = 59;
+                        hours--;
+                        if (hours < 0) {
+                            hours = 2;
+                            minutes = 15;
+                            seconds = 30;
+                        }
+                    }
+                }
+                
+                const timeString = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                countdownElement.textContent = timeString;
+            }, 1000);
+        }
+
+        // Start animations when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            animateCountdown();
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
